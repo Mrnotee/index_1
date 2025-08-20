@@ -1,1 +1,131 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <title>Pertanyaan Spesial</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #ffe6f0;
+      overflow: hidden;
+    }
+    h1 {
+      margin-top: 50px;
+      color: #d63384;
+    }
+    .btn {
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    #yaBtn {
+      background: #ff4081;
+      color: white;
+    }
+    #tidakBtn {
+      background: #6c757d;
+      color: white;
+    }
+    /* Love effect */
+    .love {
+      position: fixed;
+      top: -20px;
+      font-size: 24px;
+      color: red;
+      animation: fall 5s linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+    /* Video popup */
+    #videoContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+    #videoContainer video {
+      max-width: 90%;
+      max-height: 90%;
+      border: 4px solid white;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Apakah kamu mau menjadi kekasihku?</h1>
+  <button id="yaBtn" class="btn">Ya</button>
+  <button id="tidakBtn" class="btn">Tidak</button>
+
+  <!-- Video popup untuk "Tidak" -->
+  <div id="videoContainer">
+    <video id="myVideo" controls autoplay>
+      <source src="snaptik_7499565967865859383_hd (1).mp4" type="video/mp4">
+      Browser tidak mendukung video.
+    </video>
+  </div>
+
+  <script>
+    const yaBtn = document.getElementById("yaBtn");
+    const tidakBtn = document.getElementById("tidakBtn");
+    const videoContainer = document.getElementById("videoContainer");
+    const myVideo = document.getElementById("myVideo");
+
+    // Fungsi hujan love
+    function createLove() {
+      const love = document.createElement("div");
+      love.classList.add("love");
+      love.innerHTML = "❤️";
+      love.style.left = Math.random() * 100 + "vw";
+      love.style.fontSize = Math.random() * 20 + 20 + "px";
+      love.style.animationDuration = (Math.random() * 3 + 2) + "s";
+      document.body.appendChild(love);
+      setTimeout(() => love.remove(), 5000);
+    }
+
+    // Klik YA
+    yaBtn.addEventListener("click", () => {
+      // munculkan hujan love
+      setInterval(createLove, 200);
+
+      // delay 3 detik baru kirim ke WhatsApp
+      setTimeout(() => {
+        let pesan = "Ya, aku mau jadi kekasihmu ❤️";
+        window.location.href = "https://wa.me/6289623689408?text=" + encodeURIComponent(pesan);
+      }, 3000);
+    });
+
+    // Klik TIDAK
+    tidakBtn.addEventListener("click", () => {
+      videoContainer.style.display = "flex";
+      myVideo.src = "snaptik_7499565967865859383_hd (1).mp4"; // ganti dengan video khusus untuk "Tidak"
+      myVideo.play();
+    });
+
+    // Klik area luar video untuk menutup
+    videoContainer.addEventListener("click", (e) => {
+      if (e.target === videoContainer) {
+        videoContainer.style.display = "none";
+        myVideo.pause();
+      }
+    });
+  </script>
+</body>
+</html>
 
